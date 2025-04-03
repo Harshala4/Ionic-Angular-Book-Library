@@ -1,0 +1,17 @@
+<ion-list>
+  <ion-item>
+    <ion-select
+      [interfaceOptions]="categories"
+      [(ngModel)]="selectedCategory"
+      placeholder="Select a category"
+      (ionChange)="onCategoryChange($event)"
+    >
+      <ion-select-option
+        *ngFor="let category of categories"
+        [value]="category.value"
+      >
+        {{ category.label }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-list>

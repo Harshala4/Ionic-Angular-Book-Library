@@ -1,0 +1,38 @@
+.toolbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap; /* Ensure items don't wrap */
+  gap: 10px; /* Add spacing between items */
+}
+
+.toolbar-filters-wrapper,
+.toolbar-buttons-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Add spacing between child elements */
+}
+
+.toolbar-filters {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Add spacing between filters */
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.content {
+  flex: 3;
+}
+
+.sidebar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

@@ -1,0 +1,87 @@
+<ion-modal [isOpen]="visible" (didDismiss)="onCancel()">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>{{ editDialog ? 'Edit Book' : 'Add Book' }}</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="onCancel()">Close</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <form [formGroup]="bookForm" (ngSubmit)="onSave()" class="book-form">
+      <div class="form-container">
+        <!-- Title Field -->
+        <ion-item>
+          <ion-label position="floating">Title</ion-label>
+          <ion-input
+            id="title"
+            type="text"
+            formControlName="title"
+            required
+          ></ion-input>
+        </ion-item>
+
+        <!-- Author Name Field -->
+        <ion-item>
+          <ion-label position="floating">Author Name</ion-label>
+          <ion-input
+            id="author_name"
+            type="text"
+            formControlName="author_name"
+            required
+          ></ion-input>
+        </ion-item>
+
+        <!-- Year Field -->
+        <ion-item>
+          <ion-label position="floating">Year</ion-label>
+          <ion-input
+            id="first_publish_year"
+            type="number"
+            formControlName="first_publish_year"
+            required
+          ></ion-input>
+        </ion-item>
+
+        <!-- Author Key Field -->
+        <ion-item>
+          <ion-label position="floating">Author Key</ion-label>
+          <ion-input
+            id="author_key"
+            type="text"
+            formControlName="author_key"
+            required
+          ></ion-input>
+        </ion-item>
+
+        <!-- Inventory Status Dropdown -->
+        <ion-item>
+          <ion-label position="floating">Inventory Status</ion-label>
+          <ion-select
+            id="inventoryStatus"
+            formControlName="inventoryStatus"
+            interface="popover"
+          >
+            <ion-select-option
+              *ngFor="let option of inventoryOptions"
+              [value]="option.value"
+            >
+              {{ option.label }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+
+      <!-- Buttons Section -->
+      <div class="button-container">
+        <ion-button fill="outline" color="medium" type="button" (click)="onCancel()">
+          Cancel
+        </ion-button>
+        <ion-button color="primary" type="submit" [disabled]="bookForm.invalid">
+          {{ editDialog ? 'Save' : 'Add' }}
+        </ion-button>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal>

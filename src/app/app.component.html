@@ -1,3 +1,5 @@
-<ion-app>
+<!-- <ion-app>
   <ion-router-outlet></ion-router-outlet>
-</ion-app>
+</ion-app> -->
+<!-- <app-header [totalBooks]="totalBooks"></app-header> -->
+<app-book-list (totalBooksChange)="totalBooks = $event"></app-book-list>

@@ -1,0 +1,40 @@
+.chart-container {
+    width: 100%;
+    max-width: 1000px; /* Set a max width */
+    height: auto;
+    margin: 0 auto;
+  }
+  
+  .chart-container {
+    width: 100%;
+    max-width: 800px; /* Ensures a maximum size */
+    height: 400px; /* Fixed height */
+    margin: 0 auto; /* Center alignment */
+  }
+  
+  .chart-wrapper {
+    display: flex; /* Enables side-by-side layout */
+    justify-content: center; /* Centers the charts */
+    gap: 20px; /* Adds space between the charts */
+    flex-wrap: wrap; /* Ensures responsiveness */
+  }
+  
+  .chart-container {
+    flex: 1; /* Makes both charts take equal width */
+    max-width: 600px; /* Adjust the max width */
+    height: 400px; /* Fix height for uniformity */
+  }
+  
+  @media (min-width: 1024px) {
+    /* When screen is large */
+    .chart-container {
+      max-width: 700px; /* Reduce chart size */
+    }
+  }
+  @media (max-width: 700px) {
+    .chart-container {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+  

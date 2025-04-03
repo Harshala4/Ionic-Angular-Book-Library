@@ -1,0 +1,123 @@
+<div class="container">
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <div class="toolbar-content">
+        <app-header [totalBooks]="totalBooks"></app-header>
+
+        <!-- Category Selector & Search -->
+        <div class="toolbar-filters-wrapper">
+          <div class="toolbar-filters">
+            <ion-searchbar
+              class="search-box"
+              (ionInput)="onFilterGlobal($event)"
+              placeholder="Search..."
+            ></ion-searchbar>
+            <app-category-selector
+              (categoryChange)="onCategoryChange($event)"
+            ></app-category-selector>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="toolbar-buttons-wrapper">
+          <div class="toolbar-buttons">
+            <ion-button color="primary" (click)="openNew()">
+              <ion-icon slot="start" name="add-outline"></ion-icon>
+              Add
+            </ion-button>
+            <ion-button
+              
+              color="danger"
+              (click)="deleteSelectedBooks()"
+            >
+              <ion-icon slot="start" name="trash-outline"></ion-icon>
+              Delete
+            </ion-button>
+          </div>
+        </div>
+      </div>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="content-wrapper">
+    <div class="content">
+      <div class="card">
+        <!-- Show loader when loading -->
+        <div *ngIf="loading" class="loader">
+          <ion-spinner></ion-spinner>
+        </div>
+
+        <div *ngIf="!loading" class="p-table-wrapper">
+          <ion-grid>
+            <ion-row class="header-row">
+              <ion-col size="1">
+                <ion-checkbox
+                  [(ngModel)]="selectAll"
+                  (ionChange)="toggleSelectAll()"
+                ></ion-checkbox>
+              </ion-col>
+              <ion-col size="3"><strong>Title</strong></ion-col>
+              <ion-col size="2"><strong>Author</strong></ion-col>
+              <ion-col size="2"><strong>Year</strong></ion-col>
+              <ion-col size="2"
+                ><strong>Status</strong
+                ><ion-icon
+                  [name]="
+                    sortOrder === 'asc'
+                      ? 'arrow-up-outline'
+                      : 'arrow-down-outline'
+                  "
+                ></ion-icon
+              ></ion-col>
+              <ion-col size="2"><strong>Actions</strong></ion-col>
+            </ion-row>
+
+            <ion-row *ngFor="let book of tableBooks">
+              <ion-col size="1">
+                <ion-checkbox [(ngModel)]="book.selected"></ion-checkbox>
+              </ion-col>
+              <ion-col size="3">{{ book.title }}</ion-col>
+              <ion-col size="2">{{ book.author_name?.[0] }}</ion-col>
+              <ion-col size="2">{{ book.first_publish_year ?? "N/A" }}</ion-col>
+              <ion-col size="2">
+                <ion-chip
+                  [color]="getStatusColor(book.inventoryStatus ?? 'Available')"
+                  (click)="toggleBookStatus(book)"
+                >
+                  {{ book.inventoryStatus }}
+                </ion-chip>
+              </ion-col>
+              <ion-col size="2">
+                <ion-button color="primary" (click)="editBook(book)">
+                  <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="danger" (click)="deleteBook(book)">
+                  <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+
+            <ion-row *ngIf="tableBooks.length === 0">
+              <ion-col size="12" class="empty-message">No books found.</ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+
+        <app-book-form
+          [displayDialog]="displayDialog"
+          [editDialog]="editDialog"
+          [book]="selectedBook"
+          (save)="saveBook($event)"
+          (cancel)="onCancelDialog()"
+        >
+        </app-book-form>
+      </div>
+    </div>
+    <div class="sidebar">
+      <app-cat-chart
+        [borrowedBooksByCategory]="borrowedBooksByCategory"
+        style="margin-top: 20px"
+      ></app-cat-chart>
+    </div>
+  </div>
+</div>
