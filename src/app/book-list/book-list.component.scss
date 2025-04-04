@@ -1,6 +1,6 @@
 .toolbar-content {
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
   align-items: center;
   flex-wrap: nowrap; /* Ensure items don't wrap */
   gap: 10px; /* Add spacing between items */
@@ -17,6 +17,10 @@
   display: flex;
   align-items: center;
   gap: 10px; /* Add spacing between filters */
+}
+
+.search-box{
+  min-width:610px;
 }
 
 .content-wrapper {

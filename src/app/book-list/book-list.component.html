@@ -26,7 +26,7 @@
               Add
             </ion-button>
             <ion-button
-              
+              *ngIf="selectedBooks.length > 0"
               color="danger"
               (click)="deleteSelectedBooks()"
             >
@@ -74,7 +74,10 @@
 
             <ion-row *ngFor="let book of tableBooks">
               <ion-col size="1">
-                <ion-checkbox [(ngModel)]="book.selected"></ion-checkbox>
+                <ion-checkbox
+                  [ngModel]="book.selected"
+                  (ionChange)="onBookSelectionChange(book)"
+                ></ion-checkbox>
               </ion-col>
               <ion-col size="3">{{ book.title }}</ion-col>
               <ion-col size="2">{{ book.author_name?.[0] }}</ion-col>

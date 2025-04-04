@@ -500,7 +500,36 @@ export class BookListComponent implements OnInit {
   }
 
   toggleSelectAll() {
-    this.tableBooks.forEach((book) => (book.selected = this.selectAll));
+    this.tableBooks = this.tableBooks.map((book) => {
+      const updatedBook = { ...book, selected: this.selectAll };
+      if (this.selectAll && !this.selectedBooks.includes(book)) {
+        this.selectedBooks.push(updatedBook);
+      }
+      return updatedBook;
+    });
+
+    if (!this.selectAll) {
+      this.selectedBooks = [];
+    }
+  }
+
+  onBookSelectionChange(book: BookDoc) {
+    // Create a new object to avoid mutating the original book
+    const updatedBook = { ...book, selected: !book.selected };
+
+    // Update the tableBooks array with the updated book
+    this.tableBooks = this.tableBooks.map((b) =>
+      b.author_key === book.author_key ? updatedBook : b
+    );
+
+    // Update the selectedBooks array
+    if (updatedBook.selected) {
+      this.selectedBooks = [...this.selectedBooks, updatedBook];
+    } else {
+      this.selectedBooks = this.selectedBooks.filter(
+        (selectedBook) => selectedBook.author_key !== book.author_key
+      );
+    }
   }
 
   getStatusColor(status: string): string {
