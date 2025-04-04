@@ -1,25 +1,6 @@
-.book-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.form-container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 16px;
-}
-
 .button-container {
   display: flex;
-  justify-content: space-between;
-  padding: 16px;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-/* Additional Ionic-specific styling */
-ion-modal {
-  --width: 35rem;
+  justify-content: center; // Center the buttons horizontally
+  gap: 10px; // Add spacing between buttons
+  padding-top: 40px;
 }

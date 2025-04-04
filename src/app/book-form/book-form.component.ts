@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -25,6 +33,7 @@ import {
   IonSelect,
   IonSelectOption,
 } from '@ionic/angular/standalone';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   standalone: true,
@@ -44,11 +53,14 @@ import {
     IonInput,
     IonSelect,
     IonSelectOption,
+    NgFor,
+    NgIf,
   ],
   templateUrl: './book-form.component.html',
   styleUrl: './book-form.component.scss',
 })
 export class BookFormComponent implements OnInit {
+  @ViewChild('bookModal', { static: false }) bookModal!: IonModal;
   @Input() displayDialog: boolean = true;
   @Input() book: BookDoc | null = null;
   @Output() save = new EventEmitter<BookDoc>();
@@ -56,10 +68,18 @@ export class BookFormComponent implements OnInit {
   @Input() editDialog: boolean = false;
   visible: boolean = false;
 
+  // checkDialogVisibility(): void {
+  //   if (this.displayDialog || this.editDialog) {
+  //     this.visible = true;
+  //     console.log('hi');
+  //   }
+  // }
+
   checkDialogVisibility(): void {
-    if (this.displayDialog || this.editDialog) {
-      this.visible = true;
-    }
+    this.visible = false; // Force-close before opening
+    setTimeout(() => {
+      this.visible = this.displayDialog || this.editDialog;
+    }, 10); // Small delay to refresh UI
   }
 
   bookForm!: FormGroup;
@@ -81,8 +101,13 @@ export class BookFormComponent implements OnInit {
     // private router: Router,
     private fb: FormBuilder,
     private bookService: BookService,
+    private cdr: ChangeDetectorRef,
     private store: Store<AppState>
-  ) {
+  ) {}
+
+  ngOnInit() {
+    this.checkDialogVisibility();
+
     this.bookForm = this.fb.group({
       title: [this.book?.title || '', Validators.required],
       // subtitle:['',Validators.required],
@@ -93,12 +118,12 @@ export class BookFormComponent implements OnInit {
       ],
       author_key: [this.book?.author_key || '', Validators.required],
       inventoryStatus: [this.book?.inventoryStatus || 'Available'],
-      subtitle: [this.book?.subtitle || ''],
     });
-  }
 
-  ngOnInit() {
-    this.checkDialogVisibility();
+    // Ensure inventoryOptions is initialized
+    if (!this.inventoryOptions || this.inventoryOptions.length === 0) {
+      console.error('inventoryOptions is not initialized properly.');
+    }
 
     this.bookForm.get('title')?.valueChanges.subscribe((value) => {
       if (typeof value === 'string' && value.startsWith(' ')) {
@@ -134,30 +159,39 @@ export class BookFormComponent implements OnInit {
 
   ngOnChanges() {
     this.checkDialogVisibility();
-
-    if (this.book) {
-      this.bookForm.patchValue({
-        ...this.book,
-        author_name: Array.isArray(this.book.author_name)
-          ? this.book.author_name[0]
-          : this.book.author_name,
-        author_key: Array.isArray(this.book.author_key)
-          ? this.book.author_key[0]
-          : this.book.author_key,
-      });
+    if (this.bookForm) {
+      if (this.book) {
+        this.bookForm.patchValue({
+          ...this.book,
+          author_name: Array.isArray(this.book.author_name)
+            ? this.book.author_name[0]
+            : this.book.author_name,
+          author_key: Array.isArray(this.book.author_key)
+            ? this.book.author_key[0]
+            : this.book.author_key,
+        });
+      } else {
+        this.bookForm.reset({
+          title: '',
+          subtitle: '',
+          author_name: '',
+          first_publish_year: '',
+          author_key: '',
+          inventoryStatus: 'Available',
+        });
+      }
     } else {
-      this.bookForm.reset({
-        title: '',
-        subtitle: '',
-        author_name: '',
-        first_publish_year: '',
-        author_key: '',
-        inventoryStatus: 'Available',
-      });
+      console.warn('bookForm is not initialized yet.');
     }
   }
 
+  openModal() {
+    this.visible = true;
+    this.cdr.detectChanges();
+  }
+
   onSave(): void {
+    console.log('hi6');
     if (this.bookForm.valid) {
       const book = this.bookForm.value;
 

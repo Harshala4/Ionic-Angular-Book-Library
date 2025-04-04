@@ -28,6 +28,8 @@
 
 .content {
   flex: 3;
+  height: 90vh; /* Make the content area occupy the full window height */
+  overflow-y: auto; /* Enable vertical scrolling */
 }
 
 .sidebar {
