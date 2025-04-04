@@ -16,6 +16,7 @@ import { Chart, registerables } from 'chart.js';
 })
 export class CatChartComponent implements OnInit, OnChanges {
   @Input() borrowedBooksByCategory: { [key: string]: number } = {};
+  @Input() availableBooksByCategory: { [key: string]: number } = {};
   private chart: Chart | null = null;
 
   constructor(private cd: ChangeDetectorRef) {
@@ -36,6 +37,12 @@ export class CatChartComponent implements OnInit, OnChanges {
     const categories = Object.keys(this.borrowedBooksByCategory);
     const borrowedCounts = Object.values(this.borrowedBooksByCategory);
 
+    // Fetch available books data from local storage
+    const availableTrends = JSON.parse(localStorage.getItem('available_trends') || '{}');
+    const availableCounts = categories.map(
+      (category) => availableTrends[category] || 0
+    );
+
     if (this.chart) {
       this.chart.destroy();
     }
@@ -51,6 +58,13 @@ export class CatChartComponent implements OnInit, OnChanges {
             data: borrowedCounts,
             backgroundColor: 'rgba(255, 99, 132, 0.6)',
             borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+          },
+          {
+            label: 'Available Books',
+            data: availableCounts,
+            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+            borderColor: 'rgba(54, 162, 235, 1)',
             borderWidth: 1,
           },
         ],

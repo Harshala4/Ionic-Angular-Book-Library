@@ -59,16 +59,14 @@
               <ion-col size="3"><strong>Title</strong></ion-col>
               <ion-col size="2"><strong>Author</strong></ion-col>
               <ion-col size="2"><strong>Year</strong></ion-col>
-              <ion-col size="2"
-                ><strong>Status</strong
-                ><ion-icon
-                  [name]="
-                    sortOrder === 'asc'
-                      ? 'arrow-up-outline'
-                      : 'arrow-down-outline'
-                  "
-                ></ion-icon
-              ></ion-col>
+              <ion-col size="2">
+                <strong (click)="sortByStatus()" style="cursor: pointer;">
+                  Status
+                  <ion-icon
+                    [name]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"
+                  ></ion-icon>
+                </strong>
+              </ion-col>
               <ion-col size="2"><strong>Actions</strong></ion-col>
             </ion-row>
 
