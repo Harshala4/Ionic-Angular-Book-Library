@@ -32,6 +32,7 @@ import {
   IonInput,
   IonSelect,
   IonSelectOption,
+  IonIcon,
 } from '@ionic/angular/standalone';
 import { NgFor, NgIf } from '@angular/common';
 
@@ -39,6 +40,7 @@ import { NgFor, NgIf } from '@angular/common';
   standalone: true,
   selector: 'app-book-form',
   imports: [
+    IonIcon,
     IonHeader,
     IonLabel,
     IonModal,
