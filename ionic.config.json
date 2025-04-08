@@ -1,5 +1,7 @@
 {
   "name": "Ionic-Book-Library",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular-standalone"
 }
