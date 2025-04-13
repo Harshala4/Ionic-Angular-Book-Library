@@ -34,4 +34,36 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+// @import '@ionic/angular/css/palettes/dark.system.css';
+
+:root {
+  --ion-background-color: #ffffff; /* Set the global background color to white */
+  --ion-text-color: #000000; /* Set the global text color to black */
+}
+
+body {
+  background-color: var(--ion-background-color);
+  color: var(--ion-text-color);
+}
+
+.content-wrapper {
+  background-color: #ffffff; /* Set the background to white */
+  color: #000000; /* Set the text color to black */
+}
+
+.book-table {
+  background-color: #ffffff; /* Ensure the table background is white */
+  color: #000000; /* Ensure the text color is black */
+}
+
+ion-row,
+ion-col {
+  background-color: #ffffff; /* Set row and column background to white */
+  color: #000000; /* Set row and column text color to black */
+}
+
+.card {
+  background-color: #ffffff; /* Ensure cards are white */
+  color: #000000; /* Ensure card text is black */
+  border: 1px solid #ccc; /* Optional: Add a light border for better visibility */
+}

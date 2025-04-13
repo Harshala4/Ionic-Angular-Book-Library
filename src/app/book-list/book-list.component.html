@@ -48,60 +48,90 @@
         </div>
 
         <div *ngIf="!loading" class="p-table-wrapper">
-          <ion-grid>
-            <ion-row class="header-row">
-              <ion-col size="1">
-                <ion-checkbox
-                  [(ngModel)]="selectAll"
-                  (ionChange)="toggleSelectAll()"
-                ></ion-checkbox>
-              </ion-col>
-              <ion-col size="3"><strong>Title</strong></ion-col>
-              <ion-col size="2"><strong>Author</strong></ion-col>
-              <ion-col size="2"><strong>Year</strong></ion-col>
-              <ion-col size="2">
-                <strong (click)="sortByStatus()" style="cursor: pointer;">
-                  Status
-                  <ion-icon
-                    [name]="sortOrder === 'asc' ? 'arrow-up-outline' : 'arrow-down-outline'"
-                  ></ion-icon>
-                </strong>
-              </ion-col>
-              <ion-col size="2"><strong>Actions</strong></ion-col>
-            </ion-row>
-
-            <ion-row *ngFor="let book of tableBooks">
-              <ion-col size="1">
-                <ion-checkbox
-                  [ngModel]="book.selected"
-                  (ionChange)="onBookSelectionChange(book)"
-                ></ion-checkbox>
-              </ion-col>
-              <ion-col size="3">{{ book.title }}</ion-col>
-              <ion-col size="2">{{ book.author_name?.[0] }}</ion-col>
-              <ion-col size="2">{{ book.first_publish_year ?? "N/A" }}</ion-col>
-              <ion-col size="2">
-                <ion-chip
-                  [color]="getStatusColor(book.inventoryStatus ?? 'Available')"
-                  (click)="toggleBookStatus(book)"
+          <div class="table-scroll">
+            <ion-grid class="book-table">
+              <ion-row class="header-row">
+                <ion-col size="1">
+                  <ion-checkbox
+                    class="checkbox-col"
+                    [(ngModel)]="selectAll"
+                    (ionChange)="toggleSelectAll()"
+                  ></ion-checkbox>
+                </ion-col>
+                <ion-col
+                  size="5"
+                  class="book-col"
+                  style="display: block; text-align: center"
+                  ><strong style="display: block; text-align: center"
+                    >Book</strong
+                  ></ion-col
                 >
-                  {{ book.inventoryStatus }}
-                </ion-chip>
-              </ion-col>
-              <ion-col size="2">
-                <ion-button color="primary" (click)="editBook(book)">
-                  <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
-                </ion-button>
-                <ion-button color="danger" (click)="deleteBook(book)">
-                  <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-                </ion-button>
-              </ion-col>
-            </ion-row>
+                <ion-col size="3" class="status-col" style="text-align: center"
+                  ><strong (click)="sortByStatus()" style="cursor: pointer"
+                    >Status<ion-icon
+                      [name]="
+                        sortOrder === 'asc'
+                          ? 'arrow-up-outline'
+                          : 'arrow-down-outline'
+                      "
+                    ></ion-icon></strong
+                ></ion-col>
+                <ion-col size="3" class="actions-col" style="text-align: center"
+                  ><strong>Actions</strong></ion-col
+                >
+              </ion-row>
 
-            <ion-row *ngIf="tableBooks.length === 0">
-              <ion-col size="12" class="empty-message">No books found.</ion-col>
-            </ion-row>
-          </ion-grid>
+              <ion-row *ngFor="let book of tableBooks" class="table-row">
+                <ion-col size="1" class="checkbox-col">
+                  <ion-checkbox
+                    [ngModel]="book.selected"
+                    (ionChange)="onBookSelectionChange(book)"
+                  ></ion-checkbox
+                ></ion-col>
+                <!-- Book Column -->
+                <ion-col size="5" class="book-col">
+                  <div class="book-details">
+                    <strong>{{ book.title }}</strong>
+                    <p>Author: {{ book.author_name?.[0] }}</p>
+                    <p>Year: {{ book.first_publish_year ?? "N/A" }}</p>
+                  </div>
+                </ion-col>
+
+                <!-- Status Column -->
+                <ion-col size="3" style="text-align: center" class="status-col">
+                  <ion-chip
+                    [color]="
+                      getStatusColor(book.inventoryStatus ?? 'Available')
+                    "
+                    (click)="toggleBookStatus(book)"
+                  >
+                    {{ book.inventoryStatus }}
+                  </ion-chip>
+                </ion-col>
+
+                <!-- Actions Column -->
+                <ion-col
+                  size="3"
+                  style="text-align: center"
+                  class="actions-col"
+                >
+                  <ion-button color="primary" (click)="editBook(book)">
+                    <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+                  </ion-button>
+                  <ion-button color="danger" (click)="deleteBook(book)">
+                    <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+
+              <!-- Empty State -->
+              <ion-row *ngIf="tableBooks.length === 0">
+                <ion-col size="12" class="empty-message"
+                  >No books found.</ion-col
+                >
+              </ion-row>
+            </ion-grid>
+          </div>
         </div>
 
         <app-book-form

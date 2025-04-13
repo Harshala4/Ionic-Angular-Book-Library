@@ -1,7 +1,10 @@
 {
   "name": "Ionic-Book-Library",
   "integrations": {
-    "cordova": {}
+    "cordova": {
+      "enabled": true,
+      "platforms": ["browser", "android"]
+    }
   },
   "type": "angular-standalone"
 }
