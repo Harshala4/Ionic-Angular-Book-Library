@@ -6,27 +6,9 @@ import {
   inject,
   OnInit,
   Output,
-  ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {
-  IonicModule,
-  IonSearchbar,
-  IonButton,
-  IonModal,
-  IonItem,
-  IonLabel,
-  IonInput,
-  IonSelect,
-  IonSelectOption,
-  IonList,
-  IonToolbar,
-  IonHeader,
-  IonTitle,
-  IonContent,
-  AlertController,
-  ToastController,
-} from '@ionic/angular';
+import { IonicModule, AlertController, ToastController } from '@ionic/angular';
 import { BookFormComponent } from '../book-form/book-form.component';
 import { CategorySelectorComponent } from '../category-selector/category-selector.component';
 import { CatChartComponent } from '../category-selector/cat-chart/cat-chart.component';
@@ -44,7 +26,8 @@ import { filter, map, Observable, of, take } from 'rxjs';
 import { BookState } from '../states/book.reducer';
 import { HttpClient } from '@angular/common/http';
 import { distinctUntilChanged } from 'rxjs/operators';
-import { AppState } from '../states/book.reducer'; // Ensure AppState is imported
+import { DialogService } from '../services/dialog.service';
+import { ChartDataService } from '../services/chart-data.service';
 
 interface Column {
   field: string;
@@ -65,7 +48,6 @@ interface Status {
     IonicModule,
     BookFormComponent,
     CategorySelectorComponent,
-    CatChartComponent,
     HeaderComponent,
   ],
   templateUrl: './book-list.component.html',
@@ -99,7 +81,9 @@ export class BookListComponent implements OnInit {
     private store: Store<{ books: BookState }>,
     private http: HttpClient,
     private alertController: AlertController, // Inject AlertController
-    private toastController: ToastController // Inject ToastController
+    private toastController: ToastController, // Inject ToastController
+    private dialogService: DialogService, // Inject DialogService
+    private chartDataService: ChartDataService
   ) {
     this.books$ = this.store.pipe(
       select((state) => state.books.books),
@@ -135,6 +119,10 @@ export class BookListComponent implements OnInit {
     this.books$.subscribe((books) => {
       this.totalBooks = books.length;
       this.totalBooksChange.emit(this.totalBooks);
+    });
+
+    this.dialogService.openDialog$.subscribe(() => {
+      this.openNew(); // Call the method to open the dialog
     });
   }
 
@@ -491,12 +479,13 @@ export class BookListComponent implements OnInit {
       borrowedTrends[category] = borrowedCount;
       availableTrends[category] = availableCount;
     });
-
+    this.chartDataService.updateChartData(borrowedTrends, availableTrends);
     this.borrowedBooksByCategory = borrowedTrends;
 
     // Store the data separately in localStorage
     localStorage.setItem('borrowed_trends', JSON.stringify(borrowedTrends));
     localStorage.setItem('available_trends', JSON.stringify(availableTrends));
+    
   }
 
   toggleSelectAll() {

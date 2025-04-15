@@ -15,24 +15,31 @@
             <app-category-selector
               (categoryChange)="onCategoryChange($event)"
             ></app-category-selector>
+            <ion-button
+              *ngIf="selectedBooks.length > 0"
+              color="danger"
+              (click)="deleteSelectedBooks()"
+            >
+              <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+            </ion-button>
           </div>
         </div>
 
         <!-- Buttons -->
         <div class="toolbar-buttons-wrapper">
           <div class="toolbar-buttons">
-            <ion-button color="primary" (click)="openNew()">
+            <!-- <ion-button color="primary" (click)="openNew()">
               <ion-icon slot="start" name="add-outline"></ion-icon>
               Add
-            </ion-button>
-            <ion-button
+            </ion-button> -->
+            <!-- <ion-button
               *ngIf="selectedBooks.length > 0"
               color="danger"
               (click)="deleteSelectedBooks()"
             >
               <ion-icon slot="start" name="trash-outline"></ion-icon>
               Delete
-            </ion-button>
+            </ion-button> -->
           </div>
         </div>
       </div>
@@ -144,11 +151,16 @@
         </app-book-form>
       </div>
     </div>
-    <div class="sidebar">
+    <!-- <div class="sidebar">
       <app-cat-chart
         [borrowedBooksByCategory]="borrowedBooksByCategory"
         style="margin-top: 20px"
       ></app-cat-chart>
-    </div>
+    </div> -->
+    <!-- <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+      <ion-fab-button color="secondary" (click)="openNew()">
+        <ion-icon name="add-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab> -->
   </div>
 </div>

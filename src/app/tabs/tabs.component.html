@@ -1,0 +1,42 @@
+<!-- <ion-tabs>
+    <ion-tab-bar slot="bottom">
+  
+      <ion-tab-button tab="home" [routerLink]="['/home']">
+        <ion-icon name="home-outline"></ion-icon>
+        <ion-label>Home</ion-label>
+      </ion-tab-button>
+  
+    
+      <ion-tab-button (click)="openNew()" class="fab-tab-button">
+        <ion-fab-button size="small" color="primary">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="chart" [routerLink]="['/chart']">
+        <ion-icon name="bar-chart-outline"></ion-icon>
+        <ion-label>Chart</ion-label>
+      </ion-tab-button>
+  
+    </ion-tab-bar>
+  </ion-tabs>
+   -->
+
+   <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="book-list" [routerLink]="['/tabs/book-list']">
+        <ion-icon name="book-outline"></ion-icon>
+        <ion-label>Books</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button (click)="openNew()" tab="add" class="fab-button">
+        <ion-icon name="add-circle" size="large" color="primary"></ion-icon>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="chart" [routerLink]="['/tabs/chart']">
+        <ion-icon name="bar-chart-outline"></ion-icon>
+        <ion-label>Chart</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+  

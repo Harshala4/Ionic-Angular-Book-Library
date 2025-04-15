@@ -92,13 +92,21 @@ ion-button ion-icon {
     gap: 10px; /* Add spacing between filter fields */
   }
 
-  .toolbar-filters{
+  .toolbar-filters {
     display: flex;
     flex-wrap: wrap; /* Allow wrapping for filter fields */
     justify-content: space-between; /* Distribute filter fields evenly */
     gap: 10px; /* Add spacing between filter fields */
   }
 
+  .toolbar-filters ion-button {
+    padding-top: 10px;
+    width: 45px !important;
+    height: 45px !important;
+  }
+  .toolbar-filters ion-button ion-icon {
+    font-size: 18px !important;
+  }
   .toolbar-buttons-wrapper {
     display: flex;
     justify-content: space-between; /* Align buttons side by side */
@@ -110,7 +118,7 @@ ion-button ion-icon {
     gap: 10px; /* Add spacing between buttons */
   }
   .toolbar-buttons ion-button {
-    min-width:180px;
+    min-width: 180px;
   }
   ion-col[class*="size"] {
     flex: 1 1 100% !important;
